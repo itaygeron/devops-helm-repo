@@ -1,0 +1,22 @@
+{{- if .Values.cron.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.cron.name }}
+spec:
+  schedule: "{{ .Values.cron.schedule }}"
+  successfulJobsHistoryLimit: {{ .Values.cron.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.cron.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: {{ .Values.cron.name }}
+              image: {{ .Values.cron.image }}
+              command:
+                - sh
+                - -c
+                - curl -s http://hello-world-service:5000
+          restartPolicy: OnFailure
+{{- end }}
