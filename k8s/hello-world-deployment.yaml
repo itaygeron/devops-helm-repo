@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-app
+  labels:
+    app: hello-world-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-app
+  template:
+    metadata:
+      labels:
+        app: hello-world-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: itaygeron2/hello-world-app:v1.0
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: hello-world-config
+        - secretRef:
+            name: hello-world-secret
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "500m"
