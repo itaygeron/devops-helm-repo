@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello-world-cron
+spec:
+  schedule: "*/1 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: hello-world-cron
+              image: curlimages/curl:latest
+              command:
+                - sh
+                - -c
+                - curl -s http://hello-world-service:5000
+          restartPolicy: OnFailure
