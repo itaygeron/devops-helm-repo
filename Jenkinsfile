@@ -40,6 +40,5 @@ pipeline {
             '''
 			echo 'The app is deployed!'
 	    }
-	}
     }
 }
