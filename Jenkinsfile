@@ -17,7 +17,7 @@ pipeline {
 
 			kubectl rollout status deployment/hello-world-app --timeout=120s
 
-			powershell -Command "$response = Invoke-WebRequest -Uri 'http://localhost:30007' -UseBasicParsing; $body = $response.Content; Write-Host $body; if ($body -notlike '*Hello, World!*') { Write-Error 'Expected text not found'; exit 1 }"
+			powershell -NoProfile -Command "\$response = Invoke-WebRequest -Uri 'http://localhost:30007' -UseBasicParsing; \$body = \$response.Content; Write-Host 'Response:'; Write-Host \$body; if (\$body -notlike '*Hello, World!*') { Write-Error 'Expected Hello, World! not found on localhost:30007'; exit 1 }"
 			"""
 			echo 'The tests have passed successfully!'
 	    }
