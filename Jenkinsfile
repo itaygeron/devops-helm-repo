@@ -17,7 +17,7 @@ pipeline {
 
 			kubectl rollout status deployment/hello-world-app --timeout=120s
 
-			kubectl logs -l deployment/instance=hello-world-app > app.log
+			kubectl logs deployment/hello-world-app > app.log
 
 			findstr /C:"Hello, World!" app.log
 			"""
