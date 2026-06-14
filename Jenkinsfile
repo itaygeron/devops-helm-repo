@@ -13,7 +13,7 @@ pipeline {
 	stage('Test') {
 	    steps {
 			bat """
-			helm upgrade --install hello-world-app .hello-world-app/helm-chart --set image.tag=v1.0
+			helm upgrade --install hello-world-app ./hello-world-app --set image.tag=v1.0
 
 			kubectl rollout status deployment/hello-world-app --timeout=120s
 
