@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
 				bat """
-				docker image build -t itaygeron2/hello-world-app:v1.0 .
+				docker image build -t itaygeron2/hello-world-app:v1.0 project
                 echo 'Build is done!'
 				"""
             }
