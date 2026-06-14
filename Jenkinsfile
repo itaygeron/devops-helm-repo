@@ -32,7 +32,7 @@ pipeline {
 		            bat '''
 		            echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin
 		
-		            docker build -f Project\\Dockerfile -t %DOCKER_USER%/hello-world-app:v1.0 Project
+		            docker build -f project\\Dockerfile -t %DOCKER_USER%/hello-world-app:v1.0 project
 		
 		            docker push %DOCKER_USER%/hello-world-app:v1.0
 		
