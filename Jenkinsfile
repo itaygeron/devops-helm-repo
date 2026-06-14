@@ -4,12 +4,15 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+				bat """
 				docker image build -t itaygeron2/hello-world-app:v1.0
                 echo 'Build is done!'
+				"""
             }
         }
 	stage('Test') {
 	    steps {
+			bat """
 			helm upgrade --install hello-world-app ./helm-chart --set image.tag=v1.0
 
 			kubectl rollout status deployment/hello-world-app --timeout=120s
@@ -18,12 +21,15 @@ pipeline {
 
 			findstr /C:"Hello, World!" app.log
 	        echo 'The tests have passed successfully!'
+			"""
 	    }
 	}
 	stage('Deploy') {
 	    steps {
-			docker push docker.io/itaygeron2/hello-world-app:v1.0
+			bat """
+			docker	 push docker.io/itaygeron2/hello-world-app:v1.0
 	        echo 'The app is deployed!'
+			"""
 	    }
 	}
     }
